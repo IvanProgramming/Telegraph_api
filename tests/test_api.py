@@ -3,7 +3,6 @@ import logging
 import unittest
 from random import choice
 from string import ascii_letters
-from time import sleep
 
 from pydantic import ValidationError
 
@@ -124,6 +123,11 @@ class APITestCases(unittest.TestCase):
         run_async(self.telegraph.revoke_access_token())
         new_token = self.telegraph.access_token
         self.assertNotEqual(old_token, new_token)
+
+    def test_file_upload(self):
+        file_url = "https://telegra.ph/file/658b2fbbf25fc45ce74b1.mp4"
+        file = run_async(self.telegraph.upload_file(file_url=file_url))
+        self.assertIsNotNone(file)
 
 
 if __name__ == '__main__':
