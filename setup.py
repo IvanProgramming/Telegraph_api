@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="telegraph_api",
-    version="1.0.3",
+    version="1.0.4",
     author="ivanprogramming",
     description="Asynchronus Python wrapper for telgra.ph API",
     long_description=long_description,
