@@ -1,10 +1,9 @@
 import logging
-import tempfile
 from json import dumps
 from typing import List
 
 import aiohttp
-from aiohttp import ContentTypeError, ClientSession
+from aiohttp import ContentTypeError
 from pydantic import parse_obj_as
 from typing.io import IO
 
@@ -17,7 +16,7 @@ from telegraph_api.utils import normalize_locals, serialize_nodes
 
 
 class APIEndpoints:
-    """ Class with endpoints of telegraph api """
+    """Class with endpoints of telegraph api"""
 
     base_uri = "https://api.telegra.ph"
     CREATE_ACCOUNT = f"{base_uri}/createAccount"
@@ -42,7 +41,7 @@ class APIEndpoints:
 
 
 class Telegraph:
-    """ Telegraph API class """
+    """Telegraph API class"""
 
     def __init__(self, access_token=None):
         """
@@ -149,7 +148,7 @@ class Telegraph:
 
         :param path: Path to the Telegraph page
         :param return_content: If true, content field will be returned
-        :return: Returns Page object
+        :return: Page object
         """
         page: Page = await self.make_request(APIEndpoints.get_page(path), params=normalize_locals(locals(), "path"),
                                              model=Page)
@@ -161,7 +160,7 @@ class Telegraph:
 
         :param limit: Limits the number of pages to be retrieved
         :param offset: Sequential number of the first page to be returned
-        :return: a PageList object, sorted by most recently created pages first
+        :return: list of pages, sorted by most recently created pages first
         """
         pages: List[Page] = await self.make_request(APIEndpoints.GET_PAGE_LIST, params=normalize_locals(locals()),
                                                     model=List[Page])
@@ -189,7 +188,7 @@ class Telegraph:
         :param short_name: New account name
         :param author_name: New default author name used when creating new articles
         :param author_url: New default profile link, opened when users click on the author's name below the title
-        :return: returns an Account object with the default fields
+        :return: an Account object with the default fields
         """
         account = await self.make_request(APIEndpoints.EDIT_ACCOUNT_INFO, params=normalize_locals(locals()))
         return account

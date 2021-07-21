@@ -8,9 +8,10 @@ ALLOWED_EXTENSIONS = ['gif', 'jpg', 'jpe', 'jpeg', 'jfif', 'png', 'mp4', 'm4v', 
 class UploadedFile(BaseModel):
     """ Pydantic model for Uploaded to server File """
     src: str
-
+    """ Path to telegra.ph file """
     @property
-    def extension(self):
+    def extension(self) -> str:
+        """ Extension of file """
         return self.src.split(".")[-1]
 
     def to_node(self, caption: str = "") -> Node:
