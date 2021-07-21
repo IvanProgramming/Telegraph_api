@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import tempfile
 import unittest
 from random import choice
 from string import ascii_letters
@@ -34,9 +35,6 @@ class APITestCases(unittest.TestCase):
     def setUpClass(cls):
         cls.telegraph = Telegraph()
         run_async(cls.telegraph.create_account(generate_random_str(10)))
-
-    def tearDown(self) -> None:
-        run_async(asyncio.sleep(1))
 
     def test_account_creation(self):
         short_name = generate_random_str(5)
@@ -125,8 +123,10 @@ class APITestCases(unittest.TestCase):
         self.assertNotEqual(old_token, new_token)
 
     def test_file_upload(self):
-        file_url = "https://telegra.ph/file/658b2fbbf25fc45ce74b1.mp4"
-        file = run_async(self.telegraph.upload_file(file_url=file_url))
+        file_path = ""
+        if not file_path:
+            self.skipTest("File path is not specified!")
+        file = run_async(self.telegraph.upload_file())
         self.assertIsNotNone(file)
 
 

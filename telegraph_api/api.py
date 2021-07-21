@@ -4,7 +4,7 @@ from json import dumps
 from typing import List
 
 import aiohttp
-from aiohttp import ContentTypeError
+from aiohttp import ContentTypeError, ClientSession
 from pydantic import parse_obj_as
 from typing.io import IO
 
@@ -269,12 +269,11 @@ class Telegraph:
         :param extra_params: Extra request params, passed into session.get function
         :return: Dict or Str, depending on raw flag
         """
-        async with aiohttp.ClientSession() as session:
-            async with await session.get(url, params=params, **extra_params) as response:
-                if raw:
-                    return (await response.read()).decode(encoding=encoding)
-                else:
-                    return await response.json()
+        async with aiohttp.request("get", url, params=params, **extra_params) as response:
+            if raw:
+                return (await response.read()).decode(encoding=encoding)
+            else:
+                return await response.json()
 
     @staticmethod
     async def post(url: str, params: dict, raw=False, encoding="utf-8", **extra_params):
@@ -288,9 +287,8 @@ class Telegraph:
         :param extra_params: Extra request params, passed into session.get function
         :return: Dict or Str, depending on raw flag
         """
-        async with aiohttp.ClientSession() as session:
-            async with await session.post(url, params=params, **extra_params) as response:
-                if raw:
-                    return (await response.read()).decode(encoding=encoding)
-                else:
-                    return await response.json()
+        async with aiohttp.request("post", url, params=params, **extra_params) as response:
+            if raw:
+                return (await response.read()).decode(encoding=encoding)
+            else:
+                return await response.json()
