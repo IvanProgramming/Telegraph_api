@@ -11,7 +11,7 @@ Installation
 
 .. code-block:: shell-session
 
-   $ pip install telegraph_api
+   $ pip install telegraph-api
 
 Example Usage
 ----------------

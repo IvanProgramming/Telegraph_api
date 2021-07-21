@@ -1,4 +1,9 @@
 # TelegraphAPI
+[![Documentation Status](https://readthedocs.org/projects/telegraph-api/badge/?version=latest)](https://telegraph-api.readthedocs.io/en/latest/?badge=latest)
+![Lines of code](https://img.shields.io/tokei/lines/github/IvanProgramming/Telegraph_API?style=flat)
+![PyPI](https://img.shields.io/pypi/v/telegraph-api)
+[![wakatime](https://wakatime.com/badge/github/IvanProgramming/Telegraph_api.svg)](https://wakatime.com/badge/github/IvanProgramming/Telegraph_api)
+![GitHub Repo stars](https://img.shields.io/github/stars/IvanProgramming/Telegraph_api?style=social)
 
 Asynchronus Python wrapper for telgra.ph [API](https://telegra.ph/api)
 
@@ -7,12 +12,12 @@ Asynchronus Python wrapper for telgra.ph [API](https://telegra.ph/api)
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install telegraph_api.
 
 ```bash
-pip install telegraph_api
+pip install telegraph-api
 ```
 
 ## Documentation
 
-You can read documentation of this package on [readthedocs]()
+You can read documentation of this package on [readthedocs](https://telegraph-api.readthedocs.io/en/latest/index.html)
 
 Documentation of original REST api can be found on [telegra.ph](https://telegra.ph/api) site
 
