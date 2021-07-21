@@ -63,3 +63,7 @@ Please make sure to update tests as appropriate.
 ## License
 
 I choosed [MIT](https://choosealicense.com/licenses/mit/) license
+
+-----------
+
+Article in my blog about writing this wrapper (On Russian) - https://blog.rteam.club/all/fromegeya2telegram-1/
