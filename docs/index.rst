@@ -36,6 +36,7 @@ Example Usage
    # Running asynchronous function
    asyncio.run(main())
 
+Here is a pdf file, that contains this documentation :download:`pdf <_/downloads/en/latest/pdf>`
 
 .. toctree::
    :maxdepth: 4
