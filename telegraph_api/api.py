@@ -93,7 +93,8 @@ class Telegraph:
 
         params = normalize_locals(locals(), "content", "content_html", "content_json")
         params["content"] = dumps(content_json)
-        page: Page = await self.make_request(APIEndpoints.CREATE_PAGE, params=params, method="post", model=Page)
+        print(params)
+        page: Page = await self.make_request(APIEndpoints.CREATE_PAGE, json=params, method="post", model=Page)
         return page
 
     async def edit_page(self, path: str, title: str, content: List[Node] = None, content_html: str = None,
@@ -118,7 +119,7 @@ class Telegraph:
             content_json = serialize_nodes(content)
         params = normalize_locals(locals(), "content", "content_html", "path")
         params["content"] = dumps(content_json)
-        page: Page = await self.make_request(APIEndpoints.edit_page(path), params=params, method="post", model=Page)
+        page: Page = await self.make_request(APIEndpoints.edit_page(path), json=params, method="post", model=Page)
         return page
 
     async def get_account_info(self, fields: List[str] = None):
@@ -174,7 +175,7 @@ class Telegraph:
         :param year: Required if month is passed. If passed, the number of page views for the requested year will be returned.
         :param month: Required if day is passed. If passed, the number of page views for the requested month will be returned.
         :param day: Required if hour is passed. If passed, the number of page views for the requested day will be returned.
-        :param hour: If passed, the number of page views for the requested hour will be returned.
+    23701564+IvanProgramming@users.noreply.github.com    :param hour: If passed, the number of page views for the requested hour will be returned.
         :return: By default, the total number of page views will be returned.
         """
         views_dict = await self.make_request(APIEndpoints.get_views(path), params=normalize_locals(locals(), "path"))
@@ -221,7 +222,7 @@ class Telegraph:
             raise InvalidFileExtension
 
     async def make_request(self, endpoint: str, params: dict = None, method: str = "get", model=None,
-                           use_token: bool = True, **extra_params):
+                           use_token: bool = True, json=None, **extra_params):
         """
         Function for making requests to API
 
@@ -231,20 +232,25 @@ class Telegraph:
         :param model: PyDantic model for after request transformation
         :param use_token: Specifies, should token be passed in params, or not
         :param extra_params: Extra options, that will be passed into request function (e.g. file)
+        :param json: Option, specifies JSON body of POST request. If it passed, access token will be used in body
         :return: json dict, if model is not set, else BaseModel object
         :raises: MethodIsNotAllowed: if method param is invalid
         """
         # OMG this looks so scary, I think it should be fixed
         if params is None:
             params = {}
+
         if self.access_token and use_token:
-            params["access_token"] = self.access_token
+            if json is not None:
+                json["access_token"] = self.access_token
+            else:
+                params["access_token"] = self.access_token
 
         self.logger.debug(f"Making request to {endpoint}. Params - {params}")
         if method == "get":
             result = await self.get(endpoint, params=params, **extra_params)
         elif method == "post":
-            result = await self.post(endpoint, params=params, **extra_params)
+            result = await self.post(endpoint, params=params, json=json, **extra_params)
         else:
             raise MethodIsNotAllowed
 
