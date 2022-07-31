@@ -101,6 +101,17 @@ class APITestCases(unittest.TestCase):
         self.assertEqual("Test article and it has been already edited!", edited_page.title)
         self.assertEqual([Node(tag="p", children=["2+2=4"])], edited_page.content)
 
+    def test_page_creation_long(self):
+        long_page_content = []
+        for _ in range(100):
+            long_page_content.append(Node(tag="p", children=["THEENDISNEVER" * 45]))
+        created_page = run_async(self.telegraph.create_page(
+            title="This is very long text",
+            author_name="Test Bot",
+            content=long_page_content
+        ))
+        print(created_page)
+
     def test_account_view(self):
         new_telegraph = Telegraph()
         name = generate_random_str(5)
