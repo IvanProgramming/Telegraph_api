@@ -175,7 +175,7 @@ class Telegraph:
         :param year: Required if month is passed. If passed, the number of page views for the requested year will be returned.
         :param month: Required if day is passed. If passed, the number of page views for the requested month will be returned.
         :param day: Required if hour is passed. If passed, the number of page views for the requested day will be returned.
-    23701564+IvanProgramming@users.noreply.github.com    :param hour: If passed, the number of page views for the requested hour will be returned.
+        :param hour: If passed, the number of page views for the requested hour will be returned.
         :return: By default, the total number of page views will be returned.
         """
         views_dict = await self.make_request(APIEndpoints.get_views(path), params=normalize_locals(locals(), "path"))
