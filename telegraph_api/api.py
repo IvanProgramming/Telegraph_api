@@ -93,7 +93,6 @@ class Telegraph:
 
         params = normalize_locals(locals(), "content", "content_html", "content_json")
         params["content"] = dumps(content_json)
-        print(params)
         page: Page = await self.make_request(APIEndpoints.CREATE_PAGE, json=params, method="post", model=Page)
         return page
 
