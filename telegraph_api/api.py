@@ -11,6 +11,7 @@ from telegraph_api.exceptions import MethodIsNotAllowed, TelegraphError, FileIsN
 from telegraph_api.html_transform import html2nodes
 from telegraph_api.models import Account, Page
 from telegraph_api.models import Node
+from telegraph_api.models.page import PagesList
 from telegraph_api.models.uploaded_file import UploadedFile
 from telegraph_api.utils import normalize_locals, serialize_nodes
 
@@ -154,7 +155,7 @@ class Telegraph:
                                              model=Page)
         return page
 
-    async def get_page_list(self, limit: int = 50, offset: int = 0) -> List[Page]:
+    async def get_page_list(self, limit: int = 50, offset: int = 0) -> PagesList:
         """
         Use this method to get a list of pages belonging to a Telegraph account
 
@@ -162,8 +163,8 @@ class Telegraph:
         :param offset: Sequential number of the first page to be returned
         :return: list of pages, sorted by most recently created pages first
         """
-        pages: List[Page] = await self.make_request(APIEndpoints.GET_PAGE_LIST, params=normalize_locals(locals()),
-                                                    model=List[Page])
+        pages: PagesList = await self.make_request(APIEndpoints.GET_PAGE_LIST, params=normalize_locals(locals()),
+                                                   model=PagesList)
         return pages
 
     async def get_views(self, path: str, year: int = None, month: int = None, day: int = None, hour: int = None) -> int:
@@ -211,7 +212,6 @@ class Telegraph:
         else:
             raise FileIsNotPresented
         data = {"file": stream}
-        print(stream.read())
         self.logger.debug("Uploading file. ")
         try:
             response_text = await self.get(APIEndpoints.UPLOAD, data=data)
@@ -231,7 +231,6 @@ class Telegraph:
         :param model: PyDantic model for after request transformation
         :param use_token: Specifies, should token be passed in params, or not
         :param extra_params: Extra options, that will be passed into request function (e.g. file)
-        :param json: Option, specifies JSON body of POST request. If it passed, access token will be used in body
         :return: json dict, if model is not set, else BaseModel object
         :raises: MethodIsNotAllowed: if method param is invalid
         """

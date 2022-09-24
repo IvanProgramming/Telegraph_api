@@ -28,3 +28,11 @@ class Page(BaseModel):
     """ Number of page views for the page. """
     can_edit: Optional[bool]
     """ Optional. Only returned if access_token passed. True, if the target Telegraph account can edit the page. """
+
+
+class PagesList(BaseModel):
+    """ PyDantic model for telegra.ph PagesList """
+    total_count: int
+    """ Total number of pages belonging to the target Telegraph account. """
+    pages: List[Page]
+    """ List of pages belonging to the target Telegraph account. """
