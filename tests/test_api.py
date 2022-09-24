@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import tempfile
 import unittest
 from random import choice
 from string import ascii_letters
@@ -8,7 +7,7 @@ from string import ascii_letters
 from pydantic import ValidationError
 
 from telegraph_api import Telegraph
-from telegraph_api.models import Node
+from telegraph_api.models import Node, Page
 
 logging.basicConfig(level=logging.WARNING)
 logging.getLogger("Telegraph").level = logging.DEBUG
@@ -132,6 +131,22 @@ class APITestCases(unittest.TestCase):
         run_async(self.telegraph.revoke_access_token())
         new_token = self.telegraph.access_token
         self.assertNotEqual(old_token, new_token)
+
+    def test_page_list(self):
+        page_1: Page = run_async(
+            self.telegraph.create_page("Test Article 1", [Node(tag="p", children=["Test Article 1"])], "Test Bot")
+        )
+        page_2 = run_async(
+            self.telegraph.create_page("Test Article 2", [Node(tag="p", children=["Test Article 2"])], "Test Bot")
+        )
+
+        page_list = run_async(self.telegraph.get_page_list())
+        urls = []
+        for page in page_list.pages:
+            urls.append(page.url)
+        self.assertIn(page_1.url, urls)
+        self.assertIn(page_2.url, urls)
+
 
     def test_file_upload(self):
         file_path = ""
