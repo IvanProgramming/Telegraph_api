@@ -22,7 +22,7 @@ You can read documentation of this package on [readthedocs](https://telegraph-ap
 Documentation of original REST api can be found on [telegra.ph](https://telegra.ph/api) site
 
 ## Features
-- Asynchronus 
+- Asynchronous 
 - HTML2Nodes convertation
 - File uploading
 - Built with Pydantic
