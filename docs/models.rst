@@ -11,6 +11,11 @@ Page
 .. autoclass:: telegraph_api.models.Page
     :members:
 
+PageList
+--------------
+.. autoclass:: telegraph_api.models.PageList
+    :members:
+
 Node
 --------------
 .. autoclass:: telegraph_api.models.Node
