@@ -214,9 +214,10 @@ class Telegraph:
         data = {"file": stream}
         self.logger.debug("Uploading file. ")
         try:
-            response_text = await self.get(APIEndpoints.UPLOAD, data=data)
+            response_text = await self.post(APIEndpoints.UPLOAD, data=data, params=None)
+            path_value = response_text[0]
             stream.close()
-            return parse_obj_as(UploadedFile, response_text)
+            return parse_obj_as(UploadedFile, path_value)
         except ContentTypeError:
             raise InvalidFileExtension
 
